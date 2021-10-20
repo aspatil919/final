@@ -124,4 +124,37 @@ resource "azurerm_data_lake_store" "example" {
 }
 
 
+#Azure Data bricks
 
+terraform {
+
+  required_providers {
+databricks = {
+source = "databrickslabs/databricks"
+version = "0.2.3"
+}
+
+azurerm = {
+version = ">=2.0.0"
+}
+}
+}
+
+provider "azurerm" {
+features {}
+subscription_id = var.var_subscription_id
+client_id = var.var_client_id
+tenant_id = var.var_tenant_id
+client_secret = var.var_client_secret
+}
+
+provider "databricks"{
+# azure_workspace_resource_id = azurerm_databricks_workspace.databricks_workspace./subscriptions/6a3cdbae-957b-4af2-b9f6-f77cc91dad88/resourceGroups/DEV_RG/providers/Microsoft.Databricks/workspaces/adbwrkpdev
+}
+
+resource "azurerm_databricks_workspace" "myworkspace" {
+location = "East US 2"
+name = "adbwrkpdev"
+resource_group_name = "DEV_RG"
+sku = "standard"
+}
